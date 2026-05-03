@@ -1,11 +1,13 @@
 package com.example.citypulse.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.citypulse.model.Lieux
 
 @Dao
 interface LieuxDAO {
@@ -23,5 +25,5 @@ interface LieuxDAO {
 
     //afficher tous les lieux
     @Query("SELECT * FROM lieux")
-    suspend fun getAllLieux(): List<com.example.citypulse.model.Lieux>
+     fun getAllLieux(): LiveData<List<Lieux>>
 }

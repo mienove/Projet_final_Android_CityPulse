@@ -13,7 +13,8 @@ data class Lieux(
     val adresse: String,
     val photo: String,
     val categorie: String,
-    val coordonneesGPS: String,
+    val latitude: Double,
+    val longitude: Double,
     val ChampsNote: String
 
 )

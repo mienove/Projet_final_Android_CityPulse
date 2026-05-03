@@ -1,11 +1,15 @@
 package com.example.citypulse.data.local
 
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.citypulse.model.Favoris
 
+@Dao
 interface FavorisDAO {
     //methode pour inserer un favori
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -21,7 +25,7 @@ interface FavorisDAO {
 
     // Obtenir tous les favoris
     @Query("SELECT * FROM favoris")
-    suspend fun getAllFavoris(): List<com.example.citypulse.model.Favoris>
+     fun getAllFavoris(): LiveData<List<Favoris>>
 
     // Obtenir un favoris par ID
     @Query("SELECT * FROM favoris WHERE idfavoris = :id")
