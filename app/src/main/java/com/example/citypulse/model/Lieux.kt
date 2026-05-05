@@ -1,5 +1,6 @@
 package com.example.citypulse.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -15,6 +16,11 @@ data class Lieux(
     val categorie: String,
     val latitude: Double,
     val longitude: Double,
-    val ChampsNote: String
+    val ChampsNote: String,
 
+    @ColumnInfo(defaultValue = "0")
+    val estFavori: Int = 0,
+
+    @ColumnInfo(defaultValue = "''")
+    val notePersonnelle: String = ""
 )
