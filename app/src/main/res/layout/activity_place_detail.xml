@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.PlaceDetailActivity">
+
+    <TextView
+        android:id="@+id/textViewNomLieu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="Tour Eiffel" />
+
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        tools:text="Monument" />
+
+    <TextView
+        android:id="@+id/textViewAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:text="Champ de Mars, 75007 Paris" />
+
+    <TextView
+        android:id="@+id/textViewCoordinates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:text="48.8584, 2.2945" />
+
+    <ImageButton
+        android:id="@+id/buttonFavorite"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:src="@android:drawable/btn_star_big_off" />
+
+    <EditText
+        android:id="@+id/editTextNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Ajouter une note personnelle..."
+        android:inputType="textMultiLine"
+        android:minLines="3" />
+
+    <Button
+        android:id="@+id/buttonSaveNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Sauvegarder la note" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Retour" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" />
+
+</LinearLayout>

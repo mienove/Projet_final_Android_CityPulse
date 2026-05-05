@@ -35,9 +35,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
-    }
+
 }
 
 dependencies {
@@ -58,7 +56,11 @@ dependencies {
 
     // Google Maps
     implementation("com.google.android.gms:play-services-maps:18.1.0")
-// Localisation
+    // Localisation
     implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    //viewModelScope
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+
 
 }

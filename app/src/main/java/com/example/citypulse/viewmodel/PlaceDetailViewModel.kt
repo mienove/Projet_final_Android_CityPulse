@@ -1,6 +1,5 @@
 package com.example.citypulse.viewmodel
 
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,7 +21,7 @@ class PlaceDetailViewModel(
     private val _message = MutableLiveData<String?>()
     val message: LiveData<String?> = _message
 
-    fun chargerLieu(lieuId: String) {
+    fun chargerLieu(lieuId: Int) {
         _isLoading.value = true
         viewModelScope.launch {
             try {
@@ -41,9 +40,8 @@ class PlaceDetailViewModel(
             val lieuActuel = _lieu.value ?: return@launch
             val nouveauStatut = if (lieuActuel.estFavori == 1) 0 else 1
 
-            lieuxDAO.updateFavoriStatus(lieuActuel.id, nouveauStatut)
+            lieuxDAO.updateFavoriStatus(lieuActuel.idlieu, nouveauStatut)
 
-            // Mettre à jour l'objet local
             _lieu.value = lieuActuel.copy(estFavori = nouveauStatut)
 
             val message = if (nouveauStatut == 1) "Ajouté aux favoris" else "Retiré des favoris"
@@ -55,9 +53,8 @@ class PlaceDetailViewModel(
         viewModelScope.launch {
             val lieuActuel = _lieu.value ?: return@launch
 
-            lieuxDAO.updateNotePersonnelle(lieuActuel.id, note)
+            lieuxDAO.updateNotePersonnelle(lieuActuel.idlieu, note)
 
-            // Mettre à jour l'objet local
             _lieu.value = lieuActuel.copy(notePersonnelle = note)
             _message.value = "Note sauvegardée"
         }
