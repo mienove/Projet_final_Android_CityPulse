@@ -6,6 +6,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 // Si l'utilisateur accepte, on récupère sa position
                 getUserLocation()
             } else {
-                // Sinon, on peut afficher un message à l'utilisateur
+                Toast.makeText(this, "Localisation refusée : affichage limité", Toast.LENGTH_LONG).show()
             }
         }
 

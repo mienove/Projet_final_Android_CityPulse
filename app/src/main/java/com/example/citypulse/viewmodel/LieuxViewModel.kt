@@ -11,8 +11,9 @@ class LieuxViewModel (
     val lieu = MutableLiveData<List<Lieux>>()
 //    charger les lieux
     fun loadLieux(){
-        viewModelScope.launch{
-            lieu.value = daolieu.getAllLieux()
+    val viewModelScope = null
+    viewModelScope.launch{
+            lieu.value = daolieu.getAllLieux() as List<Lieux>?
         }
     }
 }
