@@ -11,33 +11,31 @@ import com.example.citypulse.model.Lieux
 
 @Dao
 interface LieuxDAO {
+    // Fonction pour insérer un lieu
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLieu(lieu: Lieux)
 
+    // Fonction pour supprimer un lieu
     @Delete
     suspend fun deleteLieu(lieu: Lieux)
 
+    // Pour la mise à jour
     @Update
     suspend fun updateLieu(lieu: Lieux)
 
+    // Pour la fiche détail - récupérer 1 seul lieu
     @Query("SELECT * FROM lieux WHERE idlieu = :lieuId")
     suspend fun getLieuById(lieuId: Int): Lieux?
 
+    // Pour modifier le statut favori
     @Query("UPDATE lieux SET estFavori = :estFavori WHERE idlieu = :lieuId")
     suspend fun updateFavoriStatus(lieuId: Int, estFavori: Int)
 
+    // Pour modifier la note personnelle
     @Query("UPDATE lieux SET notePersonnelle = :note WHERE idlieu = :lieuId")
     suspend fun updateNotePersonnelle(lieuId: Int, note: String)
 
+    // Afficher tous les lieux
     @Query("SELECT * FROM lieux")
     fun getAllLieux(): LiveData<List<Lieux>>
-
-    @Query("SELECT * FROM lieux")
-    suspend fun getAllLieuxList(): List<Lieux>
-
-    @Query("SELECT * FROM lieux WHERE estFavori = 1")
-    fun getFavoris(): LiveData<List<Lieux>>
-
-    @Query("SELECT * FROM lieux WHERE estFavori = 1")
-    suspend fun getFavorisList(): List<Lieux>
 }
