@@ -6,10 +6,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -18,6 +20,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 // Définition de l'activité principale qui gère la carte
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -28,11 +31,23 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     // Déclaration du launcher pour la permission (doit être fait avant le démarrage de l'activité)
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
+    // ========== NOUVEAU : Variables pour l'interface ==========
+    private lateinit var buttonMap: LinearLayout
+    private lateinit var buttonList: LinearLayout
+    private lateinit var buttonFavorites: LinearLayout
+    private lateinit var bottomNav: BottomNavigationView
+
+    // Variable pour savoir quel écran est affiché
+    private var currentScreen = "home" // home, map, list, favorites
+
     // Fonction appelée au démarrage de l'activité
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Charge le fichier XML qui définit l'interface graphique
         setContentView(R.layout.activity_main)
+
+        // ========== NOUVEAU : Initialisation des éléments de l'interface ==========
+        initUI()
 
         // Initialisation du launcher de permission
         requestPermissionLauncher = registerForActivityResult(
@@ -51,6 +66,77 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         // Demande à être prévenu quand la carte est prête
         mapFragment.getMapAsync(this)
+    }
+
+    // ========== NOUVEAU : Initialisation de l'interface ==========
+    private fun initUI() {
+        // Récupération des boutons de l'écran d'accueil
+        buttonMap = findViewById(R.id.buttonMap)
+        buttonList = findViewById(R.id.buttonList)
+        buttonFavorites = findViewById(R.id.buttonFavorites)
+
+        // Configuration des clics sur les boutons
+        buttonMap.setOnClickListener {
+            Toast.makeText(this, "Ouverture de la carte", Toast.LENGTH_SHORT).show()
+            showMap()
+        }
+
+        buttonList.setOnClickListener {
+            Toast.makeText(this, "Ouverture de la liste", Toast.LENGTH_SHORT).show()
+            // TODO: Afficher la liste
+        }
+
+        buttonFavorites.setOnClickListener {
+            Toast.makeText(this, "Ouverture des favoris", Toast.LENGTH_SHORT).show()
+            // TODO: Afficher les favoris
+        }
+
+        // Récupération de la barre de navigation
+        bottomNav = findViewById(R.id.bottom_navigation)
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_map -> {
+                    Toast.makeText(this, "Carte", Toast.LENGTH_SHORT).show()
+                    showMap()
+                    true
+                }
+                R.id.navigation_list -> {
+                    Toast.makeText(this, "Liste", Toast.LENGTH_SHORT).show()
+                    // TODO: Afficher la liste
+                    true
+                }
+                R.id.navigation_favorites -> {
+                    Toast.makeText(this, "Favoris", Toast.LENGTH_SHORT).show()
+                    // TODO: Afficher les favoris
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    // ========== NOUVEAU : Afficher la carte ==========
+    private fun showMap() {
+        currentScreen = "map"
+        // Rendre la carte visible
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.view?.visibility = android.view.View.VISIBLE
+
+        // Cacher l'écran d'accueil
+        val scrollView = findViewById<android.widget.ScrollView>(R.id.scrollViewHome)
+        scrollView?.visibility = android.view.View.GONE
+    }
+
+    // ========== NOUVEAU : Afficher l'écran d'accueil ==========
+    private fun showHome() {
+        currentScreen = "home"
+        // Cacher la carte
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.view?.visibility = android.view.View.GONE
+
+        // Afficher l'écran d'accueil
+        val scrollView = findViewById<android.widget.ScrollView>(R.id.scrollViewHome)
+        scrollView?.visibility = android.view.View.VISIBLE
     }
 
     // Fonction appelée automatiquement quand la carte est prête
